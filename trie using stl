@@ -1,0 +1,121 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+vector< unordered_map<char, unordered_map<char,int>  >> v;
+int j=0;
+int first[300]={};
+
+void add(string s)
+{
+  int n= s.size();
+  
+  if(n==0)
+  return ;
+  unordered_map<char, unordered_map<char,int>> mp;
+  
+  first[(int)s[0]+130]=1;
+  
+  if(j==0)
+  {
+    v.push_back(mp);
+    j++;
+  }
+  int k=0;
+  for(int i=0;i<n-1;i++)
+  {
+    // cout<<"t";
+    int temp=v[k][s[i]][s[i+1]];
+    
+    if(temp==0    )
+    {
+      v.push_back(mp);
+      v[k][s[i]][s[i+1]]=j;
+      j++;
+    }
+    
+    k=v[k][s[i]][s[i+1]];
+    
+  // cout<<s[i+1]<<endl;  
+    
+  }
+ 
+  
+}
+
+
+bool find(string s)
+{
+  int n= s.size();
+  
+  if(n==0)
+  return 1;
+  
+  if(v.empty())
+  return 0;
+  
+  if( first[(int)s[0]+130]==0 )
+  return 0;
+  
+  int k=0;
+  for(int i=0;i<n-1;i++)
+  {
+    int temp= v[k][s[i]][s[i+1]];
+    
+    if(temp==0)
+    {
+      return 0;
+    }else
+    {
+      k=temp;
+      
+  
+      
+    }
+    
+    // cout<<s[i+1]<<endl;
+  }
+  
+  // if(!v[k][s[n-1]].empty())// for sub string finding comment this if statemnt
+  // {
+  //   // cout<<k<<endl;
+  // return 0;
+   
+    
+  // }
+  
+  
+  return 1;
+}
+
+
+
+
+
+int main() 
+{
+  
+  // unordered_map<char, unordered_map
+  
+  // add("priyanka");
+  // add("prianshu");
+  
+  cout<<find("pria");
+
+  
+  
+  
+  
+  
+  // unordered_map<char, vector<int>> mp;
+  // mp['a'].push_back(1);
+  
+  // if(mp['a'].empty())
+  // cout<<"a"<<endl;
+  
+  
+  
+  
+    // cout << "Hello, World!";
+    return 0;
+}
