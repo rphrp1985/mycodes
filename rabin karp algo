@@ -1,0 +1,89 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+ 
+ vector<ll> power(1000);
+ ll mod= 1e9+9;
+vector<ll> shash(string s)
+{
+  
+  int n= s.size();
+  
+  vector<ll> v(n,0);
+  ll mul=1;
+  for(int i=0;i<n;i++)
+  {
+      ll x= s[i];
+     v[i]= x*mul;
+     
+     power[i]=mul;
+     mul = mul*31;
+     mul= mul%mod;
+     
+     
+     if(i>0)
+     {
+       v[i]= v[i]%mod+ v[i-1]%mod;
+       v[i]= v[i]%mod;
+     }
+    
+  }
+  
+  
+  return v;
+  
+  
+  
+}
+
+
+
+
+int main() 
+{
+
+string s,t;
+cin>>s>>t;
+
+vector<ll> v= shash(t);
+int n= v.size();
+ll temp= v[n-1];
+v= shash(s);
+n= s.size();
+int k=t.size();
+
+
+for(int i=0;i<n;i++)
+{
+  cout<<v[i]<<" ";
+  
+}
+cout<<endl;
+
+
+for(int i=k-1;i<n;i++)
+{
+  // cout<<i<<endl;
+  ll z=temp;
+  ll tominus=v[i];
+  if(i>k-1)
+  {
+    tominus= tominus- v[i-k]+mod;
+    tominus= tominus%mod;
+    z= temp%mod * power[i-k+1];
+    z= z%mod;
+    // tominus/=power[i];// % mod;
+  }
+  // cout<<i<<" "<<tominus<<" "<<z<<" temp="<<temp<<endl;
+  if(tominus==z)
+  cout<<i<<endl;
+  
+  
+}
+   
+
+
+    
+    return 0;
+}
